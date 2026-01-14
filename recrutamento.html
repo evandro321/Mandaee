@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Recrutamento Mandaeê Angola - Vagas disponíveis para o setor logístico.">
+    <title>Recrutamento – Mandaeê Angola</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .recruitment-page-content {
+            padding: 60px 0;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .recruitment-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .recruitment-subtitle {
+            font-size: 1.5rem;
+            color: #666;
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        .recruitment-main-img {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .recruitment-desc {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #444;
+            margin-bottom: 40px;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .recruitment-secondary-img {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 50px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .recruitment-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            padding-bottom: 60px;
+        }
+
+        .btn-large {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px 30px;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-rect {
+            background-color: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .btn-secondary-rect {
+            background-color: var(--white);
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+        }
+
+        .btn-large:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(79, 43, 217, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .recruitment-title {
+                font-size: 2.5rem;
+            }
+
+            .recruitment-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .btn-large {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container header-container">
+            <div class="logo-container">
+                <a href="index.html">
+                    <img src="https://i.imgur.com/VDz3aTK.png" alt="Mandaeê Angola Logo" class="logo">
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Voltar ao Início</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="recruitment-page-content">
+            <!-- Título Principal -->
+            <h1 class="recruitment-title fade-in-section">ESTAMOS CONTRATANDO</h1>
+
+            <!-- Subtítulo -->
+            <p class="recruitment-subtitle fade-in-section">Temos vagas disponíveis por tempo limitado</p>
+
+            <!-- Imagem 1 -->
+            <div class="fade-in-section">
+                <img src="https://i.imgur.com/SUc7afp.png" alt="Oportunidade Mandaeê" class="recruitment-main-img">
+            </div>
+
+            <!-- Texto Descritivo -->
+            <p class="recruitment-desc fade-in-section">
+                Mandaeê Angola está com oportunidades abertas para diferentes áreas operacionais. Buscamos pessoas
+                comprometidas, com ou sem experiência, interessadas em aprender, crescer profissionalmente e fazer parte
+                de uma empresa em expansão no setor logístico.
+            </p>
+
+            <!-- Imagem 2 -->
+            <div class="fade-in-section">
+                <img src="https://i.imgur.com/RZnIBrS.png" alt="Equipe Logística" class="recruitment-secondary-img">
+            </div>
+
+            <!-- Botões -->
+            <div class="recruitment-buttons fade-in-section">
+                <a href="vagas.html" class="btn-large btn-primary-rect">Ver vagas disponíveis</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="site-footer fade-in-section">
+        <div class="container">
+            <p>&copy; 2025 Mandaeê Angola. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

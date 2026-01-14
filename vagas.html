@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Vagas Disponíveis – Mandaeê Angola. Confira as oportunidades abertas e selecione a vaga desejada.">
+    <title>Vagas Disponíveis – Mandaeê Angola</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Uploadcare Widget -->
+    <script>
+        UPLOADCARE_PUBLIC_KEY = '337d8eea5e6f05cf07e9';
+        UPLOADCARE_LOCALE = 'pt';
+        UPLOADCARE_TABS = 'file';
+        UPLOADCARE_PREVIEW_STEP = true;
+    </script>
+    <script charset="utf-8" src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --brand-blue: #0000FF;
+            /* Pure Blue */
+            --white: #FFFFFF;
+        }
+
+        .jobs-section {
+            padding: 60px 0;
+            background-color: #f9f9f9;
+        }
+
+        .jobs-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .jobs-header h1 {
+            font-size: 3.5rem;
+            color: var(--brand-blue);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .jobs-header p {
+            font-size: 1.25rem;
+            color: #666;
+        }
+
+        .jobs-banner {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-title {
+            font-size: 1.8rem;
+            color: var(--brand-blue);
+            border-left: 5px solid var(--brand-blue);
+            padding-left: 15px;
+            margin: 40px 0 25px;
+            text-transform: uppercase;
+        }
+
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .job-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            border-top: 4px solid transparent;
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .job-card h4 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .job-type {
+            font-size: 0.9rem;
+            color: var(--brand-blue);
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .requirements-btn {
+            background: var(--brand-blue);
+            border: none;
+            padding: 14px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            color: #fff;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-transform: uppercase;
+        }
+
+        .requirements-btn:hover {
+            background: #0000CC;
+            transform: scale(1.02);
+        }
+
+        /* --- Requirements Area (Initially Hidden) --- */
+        .requirements-content {
+            display: none;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .requirements-content ul {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .requirements-content li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 10px;
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        .requirements-content li::before {
+            content: '•';
+            color: var(--brand-blue);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .btn-init-apply {
+            background: #28a745;
+            color: #fff;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            display: block;
+        }
+
+        .btn-init-apply:hover {
+            background: #218838;
+            transform: scale(1.05);
+        }
+
+        /* --- Full Screen Modal for Form --- */
+        .modal-full {
+            display: none;
+            position: fixed;
+            z-index: 3000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            overflow-y: auto;
+            padding: 60px 0;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .modal-full.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .modal-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .form-section-title {
+            color: var(--brand-blue);
+            font-size: 1.2rem;
+            margin: 30px 0 15px;
+            border-bottom: 2px solid var(--brand-blue);
+            padding-bottom: 5px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+        }
+
+        /* Customize Uploadcare Widget to fit theme */
+        .uploadcare--widget {
+            width: 100%;
+        }
+
+        .uploadcare--widget__button_type_open {
+            background-color: #f8f9fa !important;
+            color: var(--brand-blue) !important;
+            border: 1px solid #ddd !important;
+            padding: 12px !important;
+            border-radius: 8px !important;
+            font-weight: 600 !important;
+            font-size: 1rem !important;
+        }
+
+        .btn-submit-final {
+            width: 100%;
+            padding: 20px;
+            background: var(--brand-blue);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit-final:hover {
+            background: #0000CC;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 255, 0.2);
+        }
+
+        /* Loading Screen */
+        .loader-screen {
+            display: none;
+            position: fixed;
+            z-index: 4000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            width: 70px;
+            height: 70px;
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid var(--brand-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 25px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Success Screen */
+        .success-screen {
+            display: none;
+            position: fixed;
+            z-index: 5000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .success-card {
+            max-width: 550px;
+            padding: 50px 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .success-card h2 {
+            color: #28a745;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .success-card p {
+            color: #555;
+            margin-bottom: 35px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .btn-back-home {
+            display: inline-block;
+            padding: 16px 40px;
+            background: var(--brand-blue);
+            color: #fff;
+            border-radius: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .jobs-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .modal-container {
+                padding: 0 15px;
+            }
+
+            .success-card {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container header-container">
+            <div class="logo-container">
+                <a href="index.html">
+                    <img src="https://i.imgur.com/VDz3aTK.png" alt="Mandaeê Angola Logo" class="logo">
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="recrutamento.html">Voltar</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="jobs-section">
+        <div class="container">
+            <div class="jobs-header fade-in-section">
+                <h1>VAGAS DISPONÍVEIS</h1>
+                <p>Confira as oportunidades abertas e selecione a vaga desejada</p>
+            </div>
+
+            <img src="https://i.imgur.com/1UWkuBl.png" alt="Banner Vagas" class="jobs-banner fade-in-section">
+
+            <!-- VAGAS OPERACIONAIS -->
+            <div class="fade-in-section">
+                <h3 class="category-title">🔵 BLOCO 1 — VAGAS OPERACIONAIS</h3>
+                <div class="jobs-grid">
+                    <div class="job-card">
+                        <span class="job-type">Operacional</span>
+                        <h4>Auxiliar de Logística</h4>
+                        <button class="requirements-btn" onclick="toggleReq(this)">Ver requisitos</button>
+                        <div class="requirements-content">
+                            <ul>
+                                <li>Residir em Luanda</li>
+                                <li>Idade entre 20 e 45 anos</li>
+                                <li>Ensino básico concluído</li>
+                                <li>Organização de mercadorias</li>
+                                <li>Apoio em separação e conferência de pedidos</li>
+                            </ul>
+                            <button class="btn-init-apply" onclick="openFullForm('Auxiliar de Logística')">Iniciar
+                                candidatura</button>
+                        </div>
+                    </div>
+                    <!-- Vagas extras... -->
+                    <div class="job-card">
+                        <span class="job-type">Operacional</span>
+                        <h4>Operador de Armazém</h4>
+                        <button class="requirements-btn" onclick="toggleReq(this)">Ver requisitos</button>
+                        <div class="requirements-content">
+                            <ul>
+                                <li>Residir em Luanda</li>
+                                <li>Idade entre 20 e 45 anos</li>
+                                <li>Apoio em carga e descarga</li>
+                                <li>Organização do espaço de armazém</li>
+                                <li>Atenção e responsabilidade</li>
+                            </ul>
+                            <button class="btn-init-apply" onclick="openFullForm('Operador de Armazém')">Iniciar
+                                candidatura</button>
+                        </div>
+                    </div>
+                    <div class="job-card">
+                        <span class="job-type">Operacional / Campo</span>
+                        <h4>Ajudante de Entregas</h4>
+                        <button class="requirements-btn" onclick="toggleReq(this)">Ver requisitos</button>
+                        <div class="requirements-content">
+                            <ul>
+                                <li>Residir em Luanda</li>
+                                <li>Idade entre 20 e 45 anos</li>
+                                <li>Apoio ao motorista</li>
+                                <li>Conferência de volumes</li>
+                                <li>Disponibilidade para deslocamentos</li>
+                            </ul>
+                            <button class="btn-init-apply" onclick="openFullForm('Ajudante de Entregas')">Iniciar
+                                candidatura</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BLOCO 2 -->
+            <div class="fade-in-section">
+                <h3 class="category-title">🔵 BLOCO 2 — ADMINISTRATIVO E SUPORTE</h3>
+                <div class="jobs-grid">
+                    <div class="job-card">
+                        <span class="job-type">Administrativa</span>
+                        <h4>Assistente Administrativo</h4>
+                        <button class="requirements-btn" onclick="toggleReq(this)">Ver requisitos</button>
+                        <div class="requirements-content">
+                            <ul>
+                                <li>Residir em Luanda</li>
+                                <li>Idade entre 20 e 45 anos</li>
+                                <li>Uso básico de computador</li>
+                                <li>Digitação e organização de documentos</li>
+                                <li>Preenchimento de planilhas simples</li>
+                                <li>Envio e organização de e-mails</li>
+                            </ul>
+                            <button class="btn-init-apply" onclick="openFullForm('Assistente Administrativo')">Iniciar
+                                candidatura</button>
+                        </div>
+                    </div>
+                    <div class="job-card">
+                        <span class="job-type">Atendimento / Suporte</span>
+                        <h4>Atendente de Suporte</h4>
+                        <button class="requirements-btn" onclick="toggleReq(this)">Ver requisitos</button>
+                        <div class="requirements-content">
+                            <ul>
+                                <li>Residir em Luanda</li>
+                                <li>Idade entre 20 e 45 anos</li>
+                                <li>Atendimento via WhatsApp e telefone</li>
+                                <li>Registro de informações em sistema</li>
+                                <li>Resposta a mensagens e solicitações simples</li>
+                            </ul>
+                            <button class="btn-init-apply" onclick="openFullForm('Atendente de Suporte')">Iniciar
+                                candidatura</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BLOCO 3 -->
+            <div class="fade-in-section">
+                <h3 class="category-title">🔵 BLOCO 3 — CONTROLE E LOGÍSTICA</h3>
+                <div class="jobs-grid">
+                    <div class="job-card">
+                        <span class="job-type">Logística / Controle</span>
+                        <h4>Conferente de Mercadorias</h4>
+                        <button class="requirements-btn" onclick="toggleReq(this)">Ver requisitos</button>
+                        <div class="requirements-content">
+                            <ul>
+                                <li>Residir em Luanda</li>
+                                <li>Idade entre 20 e 45 anos</li>
+                                <li>Conferência de entrada e saída de produtos</li>
+                                <li>Verificação de quantidades</li>
+                                <li>Registro básico de informações</li>
+                            </ul>
+                            <button class="btn-init-apply" onclick="openFullForm('Conferente de Mercadorias')">Iniciar
+                                candidatura</button>
+                        </div>
+                    </div>
+                    <div class="job-card">
+                        <span class="job-type">Logística / Controle</span>
+                        <h4>Controlador de Estoque</h4>
+                        <button class="requirements-btn" onclick="toggleReq(this)">Ver requisitos</button>
+                        <div class="requirements-content">
+                            <ul>
+                                <li>Residir em Luanda</li>
+                                <li>Idade entre 20 e 45 anos</li>
+                                <li>Controle de estoque em planilhas simples</li>
+                                <li>Organização de inventário</li>
+                                <li>Atualização de registros</li>
+                            </ul>
+                            <button class="btn-init-apply" onclick="openFullForm('Controlador de Estoque')">Iniciar
+                                candidatura</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FULL SCREEN FORM MODAL -->
+    <div id="fullFormModal" class="modal-full">
+        <div class="modal-container">
+            <h2 style="color:var(--brand-blue); text-align:center; margin-bottom:10px; font-size: 2rem;">CANDIDATURA
+                PARA</h2>
+            <h3 id="vagaNameDisplay"
+                style="text-align:center; color:#333; margin-bottom:40px; text-transform:uppercase; font-size: 1.5rem;">
+            </h3>
+
+            <!-- Formspree Form (Text Fields Only + Uploadcare Links) -->
+            <form id="applicationForm" action="https://formspree.io/f/mqekgbze" method="POST">
+
+                <!-- Identificação da vaga -->
+                <input type="hidden" name="vaga" id="vaga_hidden_input">
+
+                <div class="form-section-title">Dados Pessoais</div>
+                <div class="form-group">
+                    <input type="text" name="nome_completo" placeholder="Nome completo" required>
+                </div>
+                <div class="form-group">
+                    <label>Data de nascimento</label>
+                    <input type="date" name="data_nascimento" required>
+                </div>
+
+                <div class="form-section-title">Dados Familiares</div>
+                <div class="form-group">
+                    <input type="text" name="nome_pai" placeholder="Nome do pai" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="nome_mae" placeholder="Nome da mãe" required>
+                </div>
+
+                <div class="form-section-title">Documento</div>
+                <div class="form-group">
+                    <input type="text" name="bi" placeholder="Número do BI" required>
+                </div>
+
+                <div class="form-section-title">Endereço</div>
+                <div class="form-group">
+                    <input type="text" name="endereco" placeholder="Endereço completo" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="cidade" placeholder="Cidade" required>
+                </div>
+
+                <div class="form-section-title">Contato</div>
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Email para contacto" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" name="whatsapp" placeholder="WhatsApp" required>
+                </div>
+
+                <div class="form-section-title">Upload de Documentos (PDF)</div>
+                <div class="form-group">
+                    <label>Currículo (PDF)</label>
+                    <!-- Uploadcare Widget -->
+                    <input type="hidden" role="uploadcare-uploader" name="curriculo_url" id="curriculo_url"
+                        data-public-key="337d8eea5e6f05cf07e9" data-tabs="file"
+                        data-input-accept-types="application/pdf" data-locale="pt" required>
+                </div>
+                <div class="form-group">
+                    <label>Documento de Identificação (PDF)</label>
+                    <!-- Uploadcare Widget -->
+                    <input type="hidden" role="uploadcare-uploader" name="documento_identificacao_url"
+                        id="documento_identificacao_url" data-public-key="337d8eea5e6f05cf07e9" data-tabs="file"
+                        data-input-accept-types="application/pdf" data-locale="pt" required>
+                </div>
+
+                <button type="submit" class="btn-submit-final">Enviar candidatura</button>
+            </form>
+
+            <button onclick="closeFullForm()"
+                style="background:none; border:none; color:var(--brand-blue); width:100%; margin: 25px 0; cursor:pointer; font-weight:700; text-transform:uppercase;">CANCELAR</button>
+        </div>
+    </div>
+
+    <!-- LOADING SCREEN -->
+    <div id="loaderScreen" class="loader-screen">
+        <div class="spinner"></div>
+        <h2 style="color:var(--brand-blue)">Estamos processando sua candidatura…</h2>
+        <p style="color:#666; margin-top:10px;">Isso pode levar até 1 minuto.</p>
+    </div>
+
+    <!-- SUCCESS SCREEN -->
+    <div id="successScreen" class="success-screen">
+        <div class="success-card">
+            <h2>✅ Candidatura finalizada com sucesso</h2>
+            <p>Sua candidatura foi registrada com sucesso.<br>Caso seja aprovado, entraremos em contacto através do
+                email informado.</p>
+            <a href="index.html" class="btn-back-home">Voltar ao início</a>
+        </div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="site-footer fade-in-section">
+        <div class="container">
+            <p>&copy; 2025 Mandaeê Angola. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        function toggleReq(btn) {
+            const content = btn.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+                btn.textContent = "Ver requisitos";
+            } else {
+                content.style.display = "block";
+                btn.textContent = "Ocultar requisitos";
+            }
+        }
+
+        function openFullForm(vaga) {
+            document.getElementById('vagaNameDisplay').textContent = vaga;
+            document.getElementById('vaga_hidden_input').value = vaga;
+            const modal = document.getElementById('fullFormModal');
+            modal.style.display = "block";
+            setTimeout(() => modal.classList.add('active'), 10);
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeFullForm() {
+            const modal = document.getElementById('fullFormModal');
+            modal.classList.remove('active');
+            setTimeout(() => {
+                modal.style.display = "none";
+                document.body.style.overflow = "auto";
+            }, 400);
+        }
+
+        const form = document.getElementById('applicationForm');
+        form.onsubmit = function (e) {
+            e.preventDefault();
+
+            // Show Loader
+            document.getElementById('fullFormModal').style.display = "none";
+            document.getElementById('loaderScreen').style.display = "flex";
+
+            // Submit form data via AJAX (Fetch) to Formspree
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+
+            fetch(form.action, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                // Professional analysis simulation
+                setTimeout(() => {
+                    document.getElementById('loaderScreen').style.display = "none";
+                    document.getElementById('successScreen').style.display = "flex";
+                }, 30000);
+            }).catch(error => {
+                console.error('Error:', error);
+                setTimeout(() => {
+                    document.getElementById('loaderScreen').style.display = "none";
+                    document.getElementById('successScreen').style.display = "flex";
+                }, 10000);
+            });
+        };
+    </script>
+</body>
+
+</html>
